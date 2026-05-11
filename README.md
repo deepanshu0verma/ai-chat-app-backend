@@ -30,24 +30,21 @@ Node.js (v18+)
 A Google AI Studio API Key
 
 2. Installation
-Bash
+
 git clone <your-repo-url>
 cd backend
 npm install
 3. Environment Setup
 Create a .env file in the root directory:
 
-Code snippet
 PORT=3001
 GOOGLE_GENERATIVE_AI_API_KEY=your_api_key_here
 4. Running the Server
 Development Mode (with auto-reload):
 
-Bash
 npm run dev
 Production Mode:
 
-Bash
 npm start
 🔌 API Endpoints
 POST /api/chat
@@ -75,14 +72,14 @@ Rate Limiting: Protects the Gemini API quota from abuse by limiting requests per
 Decoupled Strategy: By processing AI requests on the server, we prevent the exposure of sensitive API keys to the client-side.
 
 📝 Project Structure
-Plaintext
-backend/
-├── config/             # Provider & Model configurations
-├── controllers/        # Request handlers
-├── middleware/         # Security & Rate limiting
-├── services/           # AI Logic (Gemini integration)
-├── utils/              # Logger & Helpers
-├── index.js            # Entry point
-└── .env                # Environment variables (ignored)
+
+    A[backend/] --> B[config/]
+    A --> C[controllers/]
+    A --> D[middleware/]
+    A --> E[services/]
+    A --> F[utils/]
+    A --> G[index.js]
+    A --> H[.env]
+
 👤 Author
 Deepanshu Verma Full Stack Developer | MERN Stack Engineer
