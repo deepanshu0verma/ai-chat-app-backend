@@ -1,4 +1,4 @@
-import { generateText } from 'ai'; // Change from streamText to generateText
+import { generateText } from 'ai';
 import { chatModel } from '../config/ai-provider.js';
 import { DEVELOPER_PROMPT } from '../prompts/system-prompts.js';
 
@@ -9,6 +9,6 @@ export async function getAiChatResponse(messages) {
     messages,
   });
 
-  // Return just the text content
-  return result.text;
+  // Return the result object which includes text and usage
+  return result;
 }

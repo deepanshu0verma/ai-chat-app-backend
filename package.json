@@ -1,14 +1,16 @@
 {
   "dependencies": {
     "@ai-sdk/google": "^3.0.71",
+    "@supabase/supabase-js": "^2.105.4",
     "ai": "^6.0.177",
     "cors": "^2.8.6",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.3",
     "nodemon": "^3.1.14"
   },
   "scripts": {
-  "start": "node index.js",
-  "dev": "nodemon index.js"
-}
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  }
 }

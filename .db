@@ -1,0 +1,45 @@
+create table public.profiles (
+      id uuid references auth.users on delete cascade primary key,
+      email text unique not null,
+      daily_token_usage integer default 0,
+      last_usage_reset timestamp with time zone default now()
+     );
+
+       -- Chats table for sessions
+    create table public.chats (
+      id uuid default gen_random_uuid() primary key,
+     user_id uuid references auth.users on delete cascade not null,
+     title text,
+      created_at timestamp with time zone default now()
+   );
+   
+    -- Messages table
+    create table public.messages (
+      id uuid default gen_random_uuid() primary key,
+      chat_id uuid references public.chats on delete cascade not null,
+      role text not null, -- 'user' or 'assistant'
+      content text not null,
+      created_at timestamp with time zone default now()
+    );
+   
+    -- RPC for incrementing token usage safely
+    create or replace function increment_token_usage(user_id uuid, increment integer)
+    returns void as $$
+    begin
+      update public.profiles
+      set daily_token_usage = daily_token_usage + increment
+      where id = user_id;
+    end;
+    $$ language plpgsql security definer;
+   
+    -- Enable Row Level Security (RLS)
+    alter table public.profiles enable row level security;
+    alter table public.chats enable row level security;
+    alter table public.messages enable row level security;
+
+ -- RLS Policies
+ create policy "Users can view their own profile" on public.profiles for select using (auth.uid() = id);
+ create policy "Users can manage their own chats" on public.chats for all using (auth.uid() = user_id);
+   create policy "Users can view messages in their chats" on public.messages for all using (
+        exists (select 1 from public.chats where public.chats.id = public.messages.chat_id and public.chats.user_id = auth.uid())
+  );
